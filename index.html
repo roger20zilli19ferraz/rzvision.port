@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RZ VISION | Digital Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS DE COR --- */
+        :root {
+            --cor-fundo: #110D1B; /* Roxo bem escuro do fundo da logo */
+            --cor-neon: #D94FF7; /* Roxo/Magenta vibrante da logo */
+            --cor-texto-principal: #FFFFFF;
+            --cor-subtitulo: #A0D2F7; /* Azul claro do "Digital Designer" */
+            --cor-fundo-secundario: #1A1429;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto-principal);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        /* --- SEÇÃO HERO (TOPO) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(17,13,27,1) 80%, rgba(26,20,41,1) 100%);
+        }
+
+        .hero-logo {
+            max-width: 350px;
+            margin-bottom: 20px;
+        }
+
+        .hero-cta-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 28px;
+            background-color: transparent;
+            color: var(--cor-neon);
+            border: 2px solid var(--cor-neon);
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .hero-cta-button:hover {
+            background-color: var(--cor-neon);
+            color: var(--cor-texto-principal);
+            box-shadow: 0 0 20px var(--cor-neon);
+        }
+
+        /* --- TÍTULOS DE SEÇÃO --- */
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--cor-neon);
+            text-shadow: 0 0 10px var(--cor-neon);
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--cor-subtitulo);
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+        
+        /* --- SEÇÃO PORTFÓLIO --- */
+        .portfolio-category {
+            margin-bottom: 80px;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            text-align: left;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--cor-neon);
+            padding-left: 15px;
+        }
+
+        /* --- GALERIA INTERATIVA (ARRASTAR PARA O LADO) --- */
+        .gallery {
+            display: flex;
+            overflow-x: auto; /* Permite o scroll horizontal */
+            padding-bottom: 20px; /* Espaço para a barra de rolagem não cortar a imagem */
+            gap: 20px;
+        }
+
+        /* Estilização da barra de rolagem (opcional, para um visual mais limpo) */
+        .gallery::-webkit-scrollbar {
+            height: 8px;
+        }
+        .gallery::-webkit-scrollbar-track {
+            background: var(--cor-fundo-secundario);
+            border-radius: 10px;
+        }
+        .gallery::-webkit-scrollbar-thumb {
+            background-color: var(--cor-neon);
+            border-radius: 10px;
+        }
+
+        .gallery-item {
+            flex: 0 0 300px; /* Define um tamanho fixo para os itens */
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(217, 79, 247, 0.6);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+        }
+        
+        /* --- MODAL (POP-UP DE ZOOM) --- */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            display: block;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: var(--cor-neon);
+        }
+
+        /* --- SEÇÃO CONTATO --- */
+        #contact {
+            background-color: var(--cor-fundo-secundario);
+            padding: 60px 0;
+        }
+
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-links a {
+            color: var(--cor-texto-principal);
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 0 20px;
+            transition: color 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            color: var(--cor-neon);
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            .gallery-item {
+                flex: 0 0 250px;
+                height: 180px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ======================= -->
+    <!--     SEÇÃO DE TOPO       -->
+    <!-- ======================= -->
+    <section class="hero">
+        <!-- SUBSTITUA 'URL_DA_SUA_LOGO.png' PELA URL DA SUA IMAGEM DE LOGO -->
+        <img src="https://i.imgur.com/uUBC8sM.png" alt="Logo RZ VISION" class="hero-logo">
+        <a href="#portfolio" class="hero-cta-button">VER MEUS TRABALHOS</a>
+    </section>
+
+    <!-- ======================= -->
+    <!--   SEÇÃO DE PORTFÓLIO    -->
+    <!-- ======================= -->
+    <main id="portfolio" class="container">
+        <h2 class="section-title">MEU PORTFÓLIO</h2>
+        <p class="section-subtitle">Explore uma seleção dos meus melhores projetos.</p>
+
+        <!-- CATEGORIA 1: IDENTIDADE VISUAL -->
+        <div class="portfolio-category">
+            <h3 class="category-title">Identidade Visual</h3>
+            <div class="gallery">
+                <!-- Adicione suas imagens aqui. Use placeholders de exemplo. -->
+                <!-- Substitua os links 'https://...' pelas URLs das suas imagens. -->
+                <div class="gallery-item"><img src="https://picsum.photos/seed/iv1/400/300" alt="Projeto de Identidade Visual 1" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/iv2/400/300" alt="Projeto de Identidade Visual 2" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/iv3/400/300" alt="Projeto de Identidade Visual 3" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/iv4/400/300" alt="Projeto de Identidade Visual 4" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/iv5/400/300" alt="Projeto de Identidade Visual 5" class="zoomable-image"></div>
+            </div>
+        </div>
+
+        <!-- CATEGORIA 2: ESPORTIVOS -->
+        <div class="portfolio-category">
+            <h3 class="category-title">Esportivos</h3>
+            <div class="gallery">
+                <!-- Adicione suas imagens aqui -->
+                <div class="gallery-item"><img src="https://picsum.photos/seed/sport1/400/300" alt="Projeto Esportivo 1" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/sport2/400/300" alt="Projeto Esportivo 2" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/sport3/400/300" alt="Projeto Esportivo 3" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/sport4/400/300" alt="Projeto Esportivo 4" class="zoomable-image"></div>
+            </div>
+        </div>
+
+        <!-- CATEGORIA 3: EMPRESARIAIS -->
+        <div class="portfolio-category">
+            <h3 class="category-title">Empresariais</h3>
+            <div class="gallery">
+                <!-- Adicione suas imagens aqui -->
+                <div class="gallery-item"><img src="https://picsum.photos/seed/corp1/400/300" alt="Projeto Empresarial 1" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/corp2/400/300" alt="Projeto Empresarial 2" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/corp3/400/300" alt="Projeto Empresarial 3" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/corp4/400/300" alt="Projeto Empresarial 4" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/corp5/400/300" alt="Projeto Empresarial 5" class="zoomable-image"></div>
+            </div>
+        </div>
+
+        <!-- CATEGORIA 4: IMPRESSOS -->
+        <div class="portfolio-category">
+            <h3 class="category-title">Impressos</h3>
+            <div class="gallery">
+                <!-- Adicione suas imagens aqui -->
+                <div class="gallery-item"><img src="https://picsum.photos/seed/print1/400/300" alt="Projeto Impresso 1" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/print2/400/300" alt="Projeto Impresso 2" class="zoomable-image"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/print3/400/300" alt="Projeto Impresso 3" class="zoomable-image"></div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- ======================= -->
+    <!--      SEÇÃO CONTATO      -->
+    <!-- ======================= -->
+    <section id="contact">
+        <div class="container contact-content">
+            <h2 class="section-title">VAMOS CONVERSAR?</h2>
+            <p class="section-subtitle">Entre em contato e vamos transformar sua ideia em realidade.</p>
+            <div class="contact-links">
+                <!-- Substitua '#' pelos seus links reais -->
+                <a href="mailto:seuemail@exemplo.com" target="_blank">E-mail</a>
+                <a href="https://wa.me/SEUNUMERO" target="_blank">WhatsApp</a>
+                <a href="#" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================= -->
+    <!--         RODAPÉ          -->
+    <!-- ======================= -->
+    <footer>
+        <p>&copy; 2025 RZ VISION | Todos os direitos reservados.</p>
+    </footer>
+
+
+    <!-- ======================= -->
+    <!--  MODAL PARA ZOOM DA IMAGEM -->
+    <!-- ======================= -->
+    <div id="imageModal" class="modal">
+        <span class="close-button">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+
+    <script>
+        // --- JAVASCRIPT PARA FUNCIONALIDADE DO MODAL ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona todos os elementos necessários
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const closeBtn = document.querySelector('.close-button');
+            const images = document.querySelectorAll('.zoomable-image');
+
+            // Adiciona um evento de clique para cada imagem da galeria
+            images.forEach(img => {
+                img.addEventListener('click', () => {
+                    modal.classList.add('active'); // Mostra o modal
+                    modalImg.src = img.src; // Define a imagem do modal como a imagem clicada
+                });
+            });
+
+            // Função para fechar o modal
+            function closeModal() {
+                modal.classList.remove('active');
+            }
+
+            // Adiciona evento de clique no botão de fechar
+            closeBtn.addEventListener('click', closeModal);
+
+            // Adiciona evento de clique fora da imagem (no fundo) para fechar
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Adiciona evento para fechar com a tecla 'Escape'
+            document.addEventListener('keydown', (e) => {
+                if(e.key === "Escape" && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
